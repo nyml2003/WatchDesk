@@ -1,20 +1,17 @@
-import { CounterUseCase } from "../application/CounterUseCase";
-import { BrowserCounterRepository } from "./counter.browser-repository";
-import { ElectronCounterRepository } from "./counter.electron-repository";
-import type { ICounterRepository } from "../domain/repositories";
+import { BrowserCounterService } from "./browser-counter.service";
+import { NoopFileSystemService } from "./noop-filesystem.service";
+import { BrowserSettingsService } from "./browser-settings.service";
 
 export interface Dependencies {
-  counterUseCase: CounterUseCase;
+  counterService: BrowserCounterService;
+  fsService: NoopFileSystemService;
+  settingsService: BrowserSettingsService;
 }
 
 export function createDependencies(): Dependencies {
-  const isElectron = typeof window !== "undefined" && "electronAPI" in window;
-
-  const counterRepo: ICounterRepository = isElectron
-    ? new ElectronCounterRepository()
-    : new BrowserCounterRepository();
-
   return {
-    counterUseCase: new CounterUseCase(counterRepo),
+    counterService: new BrowserCounterService(),
+    fsService: new NoopFileSystemService(),
+    settingsService: new BrowserSettingsService(),
   };
 }

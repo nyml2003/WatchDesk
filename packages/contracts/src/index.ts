@@ -1,19 +1,6 @@
-export type Brand<T, B extends string> = T & { readonly __brand: B };
+import type { CounterValueDTO, FileEntryDTO, TerminalSpawnHandle } from "./dtos";
 
-export type CounterId = Brand<string, "CounterId">;
-export type EventName = Brand<string, "EventName">;
-
-export const CounterId = {
-  of(raw: string): CounterId {
-    return raw as CounterId;
-  },
-};
-
-export const EventName = {
-  of(module: string, event: string): EventName {
-    return `${module}:${event}` as EventName;
-  },
-};
+export type { CounterValueDTO, FileEntryDTO, TerminalSpawnHandle };
 
 export const IpcChannels = {
   COUNTER_INCREMENT: "counter:increment",
@@ -33,21 +20,6 @@ export const IpcChannels = {
 } as const;
 
 export type IpcChannel = (typeof IpcChannels)[keyof typeof IpcChannels];
-
-export interface CounterValueDTO {
-  value: number;
-}
-
-export interface FileEntryDTO {
-  name: string;
-  path: string;
-  isDirectory: boolean;
-}
-
-export interface TerminalSpawnHandle {
-  id: number;
-  dispose(): void;
-}
 
 export interface ElectronAPI {
   counter: {
@@ -76,10 +48,12 @@ export interface ElectronAPI {
 }
 
 export interface NavItem {
-  id: string;
+  id: Page;
   label: string;
   icon: string;
 }
+
+export type Page = "dashboard" | "files" | "terminal" | "settings";
 
 export interface AppConfig {
   app: { name: string };
@@ -91,3 +65,12 @@ export interface AppConfig {
     settings: boolean;
   };
 }
+
+export type {
+  ICounterService,
+  ITerminalService,
+  IFileSystemService,
+  IStorageService,
+} from "./services";
+
+export type { TerminalViewComponent, TerminalViewContextValue } from "./terminal";

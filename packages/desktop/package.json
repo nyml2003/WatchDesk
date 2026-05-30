@@ -11,7 +11,9 @@
     "postinstall": "electron-builder install-app-deps"
   },
   "dependencies": {
-    "@watchdesk/coroutine": "workspace:*",
+    "@watchdesk/contracts": "workspace:*",
+    "@watchdesk/core": "workspace:*",
+    "@watchdesk/ui": "workspace:*",
     "@watchdesk/browser": "workspace:*",
     "@watchdesk/event-bus": "workspace:*",
     "@watchdesk/native": "workspace:*",

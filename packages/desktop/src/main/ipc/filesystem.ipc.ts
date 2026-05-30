@@ -1,10 +1,15 @@
 import { ipcMain, dialog } from "electron";
 import { readFile, readdir, stat } from "fs/promises";
-import { join, resolve as pathResolve } from "path";
+import { join, resolve as pathResolve, sep } from "path";
 import { ReadRawSchema, ListDirectorySchema, createHandler } from "./schemas";
-import { IpcChannels } from "./channels";
+import { IpcChannels } from "@watchdesk/contracts";
 
 let workspaceRoot: string | null = null;
+// TODO: per-window isolation when multi-window is supported
+
+export function getWorkspaceRoot(): string | null {
+  return workspaceRoot;
+}
 
 function resolveChecked(input: string): string {
   if (!workspaceRoot) {
@@ -12,7 +17,7 @@ function resolveChecked(input: string): string {
   }
   const resolved = pathResolve(input);
   const normalizedRoot = pathResolve(workspaceRoot);
-  if (!resolved.startsWith(normalizedRoot + "\\") && resolved !== normalizedRoot) {
+  if (!resolved.startsWith(normalizedRoot + sep) && resolved !== normalizedRoot) {
     throw new Error(`Access denied: "${input}" is outside the workspace.`);
   }
   return resolved;

@@ -6,9 +6,8 @@ import {
   ResetCounterSchema,
   createHandler,
 } from "./schemas";
-import { CounterId } from "@watchdesk/shared";
-import type { CounterUseCase } from "../application/counter.usecase";
-import { IpcChannels } from "./channels";
+import { CounterId, type CounterUseCase } from "@watchdesk/core";
+import { IpcChannels } from "@watchdesk/contracts";
 
 function unwrap(
   result: { ok: true; value: { value: number } } | { ok: false; error: { message: string } },

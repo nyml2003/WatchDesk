@@ -1,6 +1,7 @@
 import { ipcMain, BrowserWindow } from "electron";
 import { native } from "@watchdesk/native";
-import { IpcChannels } from "./channels";
+import { IpcChannels } from "@watchdesk/contracts";
+import { getWorkspaceRoot } from "./filesystem.ipc";
 
 interface PtyHandler {
   id: number;
@@ -10,6 +11,13 @@ interface PtyHandler {
 
 const ptyHandlers = new Map<number, PtyHandler>();
 
+function getShell(): string {
+  if (process.platform === "win32") {
+    return "cmd.exe";
+  }
+  return process.env["SHELL"] ?? "/bin/bash";
+}
+
 export function registerTerminalHandlers(): void {
   ipcMain.handle(
     IpcChannels.TERMINAL_SPAWN,
@@ -18,7 +26,8 @@ export function registerTerminalHandlers(): void {
       const win = BrowserWindow.fromWebContents(event.sender);
       if (!win) throw new Error("No window found");
 
-      const id = native.pty.spawn("cmd.exe", process.cwd(), cols, rows, (data: Uint8Array) => {
+      const cwd = getWorkspaceRoot() ?? process.cwd();
+      const id = native.pty.spawn(getShell(), cwd, cols, rows, (data: Uint8Array) => {
         win.webContents.send(channel, data);
       });
 

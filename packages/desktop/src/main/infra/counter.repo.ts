@@ -1,5 +1,4 @@
-import type { CounterId, Counter } from "../domain/entities";
-import type { ICounterRepository } from "../domain/repositories";
+import { type CounterId, type Counter, type ICounterRepository } from "@watchdesk/core";
 
 export class InMemoryCounterRepository implements ICounterRepository {
   private readonly store = new Map<string, Counter>();

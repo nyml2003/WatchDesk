@@ -1,8 +1,7 @@
 import { app, BrowserWindow, shell } from "electron";
 import { join } from "path";
 import { is } from "@electron-toolkit/utils";
-import { CounterId, log } from "@watchdesk/shared";
-import { CounterUseCase } from "./application/counter.usecase";
+import { CounterId, CounterUseCase, log } from "@watchdesk/core";
 import { InMemoryCounterRepository } from "./infra/counter.repo";
 import { registerAllIpcHandlers } from "./ipc/index";
 

@@ -1,5 +1,5 @@
 import { contextBridge, ipcRenderer } from "electron";
-import { IpcChannels } from "../main/ipc/channels";
+import { IpcChannels } from "@watchdesk/contracts";
 
 const api = {
   counter: {

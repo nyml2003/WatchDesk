@@ -1,52 +1,69 @@
 import { describe, it, expect } from "vitest";
+import type { Counter, CounterId, ICounterRepository } from "@watchdesk/core";
+import { CounterUseCase, CounterId as Cid } from "@watchdesk/core";
 
-class StubCounterRepository {
-  private value: number = 0;
+class InMemoryRepository implements ICounterRepository {
+  private store = new Map<string, Counter>();
 
-  getValue(): Promise<number> {
-    return Promise.resolve(this.value);
+  get(id: CounterId): Promise<Counter | null> {
+    return Promise.resolve(this.store.get(id) ?? null);
   }
 
-  increment(): Promise<number> {
-    return Promise.resolve(++this.value);
-  }
-
-  decrement(): Promise<number> {
-    return Promise.resolve(--this.value);
-  }
-
-  reset(): Promise<void> {
-    this.value = 0;
+  save(counter: Counter): Promise<void> {
+    this.store.set(counter.id, counter);
     return Promise.resolve();
   }
 }
 
-import { CounterUseCase } from "../../../packages/desktop/src/renderer/application/counter.usecase";
-
 describe("CounterUseCase", () => {
-  it("increment: 0 -> 1", async () => {
-    const repo = new StubCounterRepository();
-    const uc = new CounterUseCase(repo);
+  const DEFAULT_ID = Cid.of("test");
 
-    expect(await uc.increment()).toBe(1);
+  it("increment", async () => {
+    const repo = new InMemoryRepository();
+    const uc = new CounterUseCase(repo);
+    await uc.create(DEFAULT_ID, "test-counter");
+
+    const result = await uc.increment(DEFAULT_ID);
+    expect(result.ok).toBe(true);
+    if (result.ok) {
+      expect(result.value.value).toBe(1);
+    }
   });
 
-  it("decrement: 1 -> 0", async () => {
-    const repo = new StubCounterRepository();
+  it("decrement", async () => {
+    const repo = new InMemoryRepository();
     const uc = new CounterUseCase(repo);
+    await uc.create(DEFAULT_ID, "test-counter");
+    await uc.increment(DEFAULT_ID);
+    await uc.increment(DEFAULT_ID);
 
-    await uc.increment();
-    expect(await uc.decrement()).toBe(0);
+    const result = await uc.decrement(DEFAULT_ID);
+    expect(result.ok).toBe(true);
+    if (result.ok) {
+      expect(result.value.value).toBe(1);
+    }
   });
 
   it("reset", async () => {
-    const repo = new StubCounterRepository();
+    const repo = new InMemoryRepository();
+    const uc = new CounterUseCase(repo);
+    await uc.create(DEFAULT_ID, "test-counter");
+    await uc.increment(DEFAULT_ID);
+    await uc.increment(DEFAULT_ID);
+    await uc.reset(DEFAULT_ID);
+
+    const result = await uc.get(DEFAULT_ID);
+    expect(result.ok).toBe(true);
+    if (result.ok) {
+      expect(result.value.value).toBe(0);
+    }
+  });
+
+  it("returns error for non-existent counter", async () => {
+    const repo = new InMemoryRepository();
     const uc = new CounterUseCase(repo);
 
-    await uc.increment();
-    await uc.increment();
-    await uc.reset();
-
-    expect(await uc.getValue()).toBe(0);
+    const result = await uc.increment(Cid.of("missing"));
+    expect(result.ok).toBe(false);
   });
 });

@@ -12,5 +12,11 @@
     "noEmit": true
   },
   "include": ["../tests/**/*.ts"],
-  "exclude": ["../node_modules"]
+  "exclude": ["../node_modules"],
+  "references": [
+    { "path": "../packages/shared/tsconfig.json" },
+    { "path": "../packages/core/tsconfig.json" },
+    { "path": "../packages/event-bus/tsconfig.json" },
+    { "path": "../packages/contracts/tsconfig.json" }
+  ]
 }

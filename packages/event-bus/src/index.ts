@@ -1,4 +1,4 @@
-import type { EventName } from "@watchdesk/shared";
+import type { EventName } from "./ids";
 
 type FileChangeEventDTO = {
   path: string;

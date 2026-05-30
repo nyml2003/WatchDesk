@@ -21,5 +21,11 @@
     "outDir": "./dist/main"
   },
   "include": ["src/main/**/*.ts", "src/preload/**/*.ts"],
-  "exclude": ["node_modules", "dist"]
+  "exclude": ["node_modules", "dist"],
+  "references": [
+    { "path": "../shared/tsconfig.json" },
+    { "path": "../core/tsconfig.json" },
+    { "path": "../contracts/tsconfig.json" },
+    { "path": "../event-bus/tsconfig.json" }
+  ]
 }

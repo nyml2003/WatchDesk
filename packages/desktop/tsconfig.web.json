@@ -31,5 +31,13 @@
     "src/renderer/**/*.d.ts",
     "src/preload/**/*.d.ts"
   ],
-  "exclude": ["node_modules", "dist"]
+  "exclude": ["node_modules", "dist"],
+  "references": [
+    { "path": "../shared/tsconfig.json" },
+    { "path": "../core/tsconfig.json" },
+    { "path": "../contracts/tsconfig.json" },
+    { "path": "../ui/tsconfig.json" },
+    { "path": "../event-bus/tsconfig.json" },
+    { "path": "../browser/tsconfig.json" }
+  ]
 }

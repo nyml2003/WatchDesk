@@ -1,4 +1,4 @@
-import { EventName as EventNameFactory } from "@watchdesk/shared";
+import { EventName as EventNameFactory } from "../ids";
 import type { ParseResult } from "../parser";
 import { EventNameParser } from "../parser";
 
