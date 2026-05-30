@@ -15,6 +15,8 @@
     "@watchdesk/event-bus": "workspace:*",
     "@watchdesk/native": "workspace:*",
     "@watchdesk/shared": "workspace:*",
+    "@xterm/addon-fit": "~0.10.0",
+    "@xterm/xterm": "^5.5.0",
     "solid-element": "^1.8.0",
     "solid-js": "^1.9.5",
     "zod": "^3.24.0"

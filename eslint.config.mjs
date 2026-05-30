@@ -35,12 +35,7 @@ export default tseslint.config(
     },
   },
   {
-    files: [
-      "packages/desktop/**/*.ts",
-      "packages/desktop/**/*.tsx",
-      "packages/native/**/*.ts",
-      "tests/**/*.ts",
-    ],
+    files: ["packages/desktop/**/*.ts", "packages/desktop/**/*.tsx", "tests/**/*.ts"],
     rules: {
       "no-restricted-syntax": [
         "error",
@@ -69,11 +64,18 @@ export default tseslint.config(
       "**/ipc/**/*.ts",
       "**/preload/**/*.ts",
       "**/workers/**/*.ts",
+      "**/native/**/*.ts",
     ],
     rules: {
       "@typescript-eslint/no-explicit-any": "off",
       "@typescript-eslint/no-unsafe-member-access": "off",
+      "@typescript-eslint/no-unsafe-assignment": "off",
+      "@typescript-eslint/no-unsafe-call": "off",
+      "@typescript-eslint/no-unsafe-return": "off",
+      "@typescript-eslint/no-unsafe-argument": "off",
       "@typescript-eslint/no-unnecessary-condition": "off",
+      "@typescript-eslint/require-await": "off",
+      "@typescript-eslint/no-require-imports": "off",
     },
   },
   {

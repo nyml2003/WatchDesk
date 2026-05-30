@@ -40,4 +40,18 @@ export interface INativeModule {
   fs: INativeFileSystem;
   hash: INativeHash;
   compress: INativeCompress;
+  pty: INativePty;
+}
+
+export interface INativePty {
+  spawn(
+    shell: string,
+    cwd: string,
+    cols: number,
+    rows: number,
+    onData: (data: Uint8Array) => void,
+  ): number;
+  write(id: number, data: Uint8Array): void;
+  resize(id: number, cols: number, rows: number): void;
+  kill(id: number): void;
 }

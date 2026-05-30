@@ -4,7 +4,17 @@
   "version": "0.1.0",
   "description": "Native module for WatchDesk (napi-rs stub, Phase 2: Rust)",
   "main": "./dist/index.js",
-  "types": "./src/types.ts",
-  "scripts": {},
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "files": [
+    "dist/**/*",
+    "watchdesk-native.node",
+    "*.node"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json"
+  },
   "devDependencies": {}
 }

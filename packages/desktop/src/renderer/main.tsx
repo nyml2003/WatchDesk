@@ -6,6 +6,7 @@ import { Sidebar } from "./layouts/Sidebar";
 import { Dashboard } from "./pages/Dashboard";
 import { MarkdownReader } from "./pages/MarkdownReader";
 import { SettingsPage } from "./pages/Settings";
+import { TerminalPage } from "./pages/Terminal";
 import "./tokens.css";
 import "./global.css";
 
@@ -13,7 +14,7 @@ document.documentElement.setAttribute("data-theme", "dark");
 
 const deps = createDependencies();
 
-type Page = "dashboard" | "files" | "settings";
+type Page = "dashboard" | "files" | "terminal" | "settings";
 
 function App() {
   const [activePage, setActivePage] = createSignal<Page>("dashboard");
@@ -42,6 +43,9 @@ function App() {
         </Match>
         <Match when={activePage() === "files"}>
           <MarkdownReader />
+        </Match>
+        <Match when={activePage() === "terminal"}>
+          <TerminalPage theme={theme()} />
         </Match>
         <Match when={activePage() === "settings"}>
           <SettingsPage />

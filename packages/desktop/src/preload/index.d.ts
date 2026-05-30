@@ -35,6 +35,12 @@ declare global {
       dialog: {
         selectDirectory(): Promise<string | null>;
       };
+      terminal: {
+        spawn(cols: number, rows: number, onData: (data: Uint8Array) => void): Promise<number>;
+        write(id: number, data: string): Promise<void>;
+        resize(id: number, cols: number, rows: number): Promise<void>;
+        kill(id: number): Promise<void>;
+      };
       app: {
         getPlatform(): Promise<"win32" | "darwin" | "linux">;
         getVersion(): Promise<string>;

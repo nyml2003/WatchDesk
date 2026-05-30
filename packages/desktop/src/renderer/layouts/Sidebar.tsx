@@ -10,6 +10,7 @@ interface NavItem {
 const navItems: NavItem[] = [
   { id: "dashboard", label: "工作台", icon: "📋" },
   { id: "files", label: "文件浏览器", icon: "📄" },
+  { id: "terminal", label: "命令行", icon: "💻" },
   { id: "settings", label: "设置", icon: "⚙️" },
 ];
 

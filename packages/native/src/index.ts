@@ -1,42 +1,73 @@
-/**
- * Native module stub (Phase 1)
- *
- * All methods throw "not implemented" because Phase 2 (Rust napi-rs) is not yet ready.
- * The ModuleWrapper interface is documented in types.ts.
- */
+import { resolve } from "path";
 
-import type { INativeModule } from "./types";
-
-const NOT_IMPLEMENTED = (method: string): never => {
-  throw new Error(`Native module not available: ${method} (Phase 2: napi-rs Rust)`);
-};
-
-function createStubNative(): INativeModule {
-  return {
-    fs: {
-      readRaw: () => NOT_IMPLEMENTED("fs.readRaw"),
-      writeRaw: () => NOT_IMPLEMENTED("fs.writeRaw"),
-      appendRaw: () => NOT_IMPLEMENTED("fs.appendRaw"),
-      stat: () => NOT_IMPLEMENTED("fs.stat"),
-      listDir: () => NOT_IMPLEMENTED("fs.listDir"),
-      mkdir: () => NOT_IMPLEMENTED("fs.mkdir"),
-      remove: () => NOT_IMPLEMENTED("fs.remove"),
-      copy: () => NOT_IMPLEMENTED("fs.copy"),
-      rename: () => NOT_IMPLEMENTED("fs.rename"),
-      exists: () => NOT_IMPLEMENTED("fs.exists"),
-      watch: () => NOT_IMPLEMENTED("fs.watch"),
-      glob: () => NOT_IMPLEMENTED("fs.glob"),
-    },
-    hash: {
-      blake3: () => NOT_IMPLEMENTED("hash.blake3"),
-      blake3Stream: () => NOT_IMPLEMENTED("hash.blake3Stream"),
-      xxhash64: () => NOT_IMPLEMENTED("hash.xxhash64"),
-    },
-    compress: {
-      zstdCompress: () => NOT_IMPLEMENTED("compress.zstdCompress"),
-      zstdDecompress: () => NOT_IMPLEMENTED("compress.zstdDecompress"),
-    },
-  };
+let nativeModule: Record<string, unknown> | null = null;
+let loadedFrom: string | null = null;
+try {
+  const modulePath = resolve(__dirname, "..", "watchdesk-native.node");
+  nativeModule = require(modulePath) as Record<string, unknown>;
+  loadedFrom = modulePath;
+  console.log("[native] Loaded from:", loadedFrom, "exports:", Object.keys(nativeModule));
+  if (Object.keys(nativeModule).length === 0) {
+    nativeModule = null;
+  }
+} catch (err: unknown) {
+  const msg = err instanceof Error ? err.message : String(err);
+  console.error(`[native] Failed to load native module: ${msg}`);
+  nativeModule = null;
 }
 
-export const nativeModule: INativeModule = createStubNative();
+type PtySpawnFn = (
+  shell: string,
+  cwd: string,
+  cols: number,
+  rows: number,
+  cb: (_err: null | Error, data: Uint8Array) => void,
+) => number;
+type PtyWriteFn = (id: number, data: Uint8Array) => void;
+type PtyResizeFn = (id: number, cols: number, rows: number) => void;
+type PtyKillFn = (id: number) => void;
+
+export const native = {
+  pty: {
+    spawn(
+      shell: string,
+      cwd: string,
+      cols: number,
+      rows: number,
+      onData: (data: Uint8Array) => void,
+    ): number {
+      if (!nativeModule) {
+        throw new Error("Native module not available: ptySpawn");
+      }
+      const fn = nativeModule["ptySpawn"] as PtySpawnFn;
+      return fn(shell, cwd, cols, rows, (_err, data) => {
+        onData(data);
+      });
+    },
+    write(id: number, data: Uint8Array): void {
+      if (!nativeModule) {
+        throw new Error("Native module not available: ptyWrite");
+      }
+      const fn = nativeModule["ptyWrite"] as PtyWriteFn;
+      const buf = Buffer.from(data);
+      if (!Buffer.isBuffer(buf)) {
+        throw new Error(`write: Buffer.from() returned ${typeof buf} instead of Buffer`);
+      }
+      fn(id, buf);
+    },
+    resize(id: number, cols: number, rows: number): void {
+      if (!nativeModule) {
+        throw new Error("Native module not available: ptyResize");
+      }
+      const fn = nativeModule["ptyResize"] as PtyResizeFn;
+      fn(id, cols, rows);
+    },
+    kill(id: number): void {
+      if (!nativeModule) {
+        throw new Error("Native module not available: ptyKill");
+      }
+      const fn = nativeModule["ptyKill"] as PtyKillFn;
+      fn(id);
+    },
+  },
+};
