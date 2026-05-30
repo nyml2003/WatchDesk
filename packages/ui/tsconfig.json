@@ -21,9 +21,5 @@
   },
   "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.d.ts"],
   "exclude": ["node_modules", "dist"],
-  "references": [
-    { "path": "../shared/tsconfig.json" },
-    { "path": "../contracts/tsconfig.json" },
-    { "path": "../event-bus/tsconfig.json" }
-  ]
+  "references": [{ "path": "../contracts/tsconfig.json" }]
 }

@@ -1,4 +1,5 @@
 import type { JSX } from "solid-js";
+import styles from "../styles/layout.module.css";
 
 interface WatchDeskLayoutProps {
   sidebar: JSX.Element;
@@ -7,16 +8,9 @@ interface WatchDeskLayoutProps {
 
 export function WatchDeskLayout(props: WatchDeskLayoutProps) {
   return (
-    <div
-      style={{
-        display: "flex",
-        width: "100vw",
-        height: "100vh",
-        overflow: "hidden",
-      }}
-    >
+    <div class={styles.layout}>
       {props.sidebar}
-      <div style={{ flex: 1, overflow: "auto", "min-width": "0" }}>{props.children}</div>
+      <div class={styles.content}>{props.children}</div>
     </div>
   );
 }

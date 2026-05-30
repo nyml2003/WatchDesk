@@ -1,0 +1,76 @@
+.settings {
+  padding: 24px;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 24px;
+}
+
+.sectionTitle {
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 16px;
+  margin-top: 0;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 16px;
+}
+
+.label {
+  margin-bottom: 4px;
+  font-size: 14px;
+}
+
+.input {
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid var(--wd-colors-border);
+  background: var(--wd-colors-surface);
+  color: var(--wd-colors-text);
+  font-size: 14px;
+}
+
+.inputSmall {
+  composes: input;
+  width: 80px;
+}
+
+.hint {
+  font-size: 12px;
+  margin-top: 4px;
+  opacity: 0.6;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.btn {
+  padding: 8px 16px;
+  border-radius: 4px;
+  background: var(--wd-colors-accent);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+.btnSecondary {
+  padding: 8px 16px;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--wd-colors-text);
+  border: 1px solid var(--wd-colors-border);
+  cursor: pointer;
+}
+
+.saved {
+  font-size: 14px;
+  color: var(--wd-colors-accent);
+}

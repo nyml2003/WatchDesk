@@ -1,4 +1,5 @@
 import { createSignal, onMount } from "solid-js";
+import styles from "../styles/counter.module.css";
 
 export interface CounterService {
   getValue(): Promise<number>;
@@ -36,19 +37,19 @@ export function WatchCounter(props: CounterProps) {
   };
 
   return (
-    <div class="counter">
-      <span class="label">{props.label}</span>
-      <span class="value" data-testid="counter-value">
+    <div class={styles.counter}>
+      <span class={styles.label}>{props.label}</span>
+      <span class={styles.value} data-testid="counter-value">
         {count()}
       </span>
-      <div class="buttons">
-        <button class="button" onClick={handleDecrement}>
+      <div class={styles.buttons}>
+        <button class={styles.button} onClick={handleDecrement}>
           -
         </button>
-        <button class="button" onClick={handleReset}>
+        <button class={styles.button} onClick={handleReset}>
           Reset
         </button>
-        <button class="button" onClick={handleIncrement}>
+        <button class={styles.button} onClick={handleIncrement}>
           +
         </button>
       </div>

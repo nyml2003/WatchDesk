@@ -13,6 +13,7 @@
   "dependencies": {
     "@watchdesk/contracts": "workspace:*",
     "@watchdesk/core": "workspace:*",
+    "@watchdesk/shell": "workspace:*",
     "@watchdesk/ui": "workspace:*",
     "@watchdesk/browser": "workspace:*",
     "@watchdesk/event-bus": "workspace:*",

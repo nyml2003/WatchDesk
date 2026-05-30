@@ -1,0 +1,17 @@
+.cell {
+  width: 80px;
+  height: 80px;
+  font-size: 32px;
+  font-weight: 700;
+  border: 2px solid var(--wd-colors-border);
+  background: var(--wd-colors-surface);
+  color: var(--wd-colors-text);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cellHover {
+  background: var(--wd-colors-surface-active);
+}

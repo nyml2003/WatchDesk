@@ -1,8 +1,8 @@
 {
-  "name": "@watchdesk/ui",
+  "name": "@watchdesk/shell",
   "private": true,
   "version": "0.1.0",
-  "description": "Shared SolidJS view layer for WatchDesk",
+  "description": "WatchDesk shell — page registry and app orchestration",
   "main": "./src/index.ts",
   "types": "./src/index.ts",
   "exports": {
@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@watchdesk/contracts": "workspace:*",
-    "solid-js": "^1.9.5",
-    "solid-element": "^1.8.0"
+    "@watchdesk/ui": "workspace:*",
+    "solid-js": "^1.9.5"
   }
 }

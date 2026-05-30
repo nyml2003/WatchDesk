@@ -37,21 +37,12 @@ importers:
 
   packages/browser:
     dependencies:
-      "@watchdesk/contracts":
+      "@watchdesk/shell":
         specifier: workspace:*
-        version: link:../contracts
+        version: link:../shell
       "@watchdesk/ui":
         specifier: workspace:*
         version: link:../ui
-      "@xterm/addon-fit":
-        specifier: ~0.10.0
-        version: 0.10.0(@xterm/xterm@5.5.0)
-      "@xterm/xterm":
-        specifier: ^5.5.0
-        version: 5.5.0
-      solid-element:
-        specifier: ^1.8.0
-        version: 1.9.1(solid-js@1.9.13)
       solid-js:
         specifier: ^1.9.5
         version: 1.9.13
@@ -63,11 +54,7 @@ importers:
         specifier: ^2.11.0
         version: 2.11.12(solid-js@1.9.13)(vite@6.4.2(@types/node@22.19.19)(jiti@2.7.0)(yaml@2.9.0))
 
-  packages/contracts:
-    dependencies:
-      solid-js:
-        specifier: ^1.9.5
-        version: 1.9.13
+  packages/contracts: {}
 
   packages/core:
     dependencies:
@@ -95,6 +82,9 @@ importers:
       "@watchdesk/shared":
         specifier: workspace:*
         version: link:../shared
+      "@watchdesk/shell":
+        specifier: workspace:*
+        version: link:../shell
       "@watchdesk/ui":
         specifier: workspace:*
         version: link:../ui
@@ -152,30 +142,29 @@ importers:
 
   packages/shared: {}
 
+  packages/shell:
+    dependencies:
+      "@watchdesk/contracts":
+        specifier: workspace:*
+        version: link:../contracts
+      "@watchdesk/ui":
+        specifier: workspace:*
+        version: link:../ui
+      solid-js:
+        specifier: ^1.9.5
+        version: 1.9.13
+
   packages/ui:
     dependencies:
       "@watchdesk/contracts":
         specifier: workspace:*
         version: link:../contracts
-      "@watchdesk/event-bus":
-        specifier: workspace:*
-        version: link:../event-bus
-      "@watchdesk/shared":
-        specifier: workspace:*
-        version: link:../shared
       solid-element:
         specifier: ^1.8.0
         version: 1.9.1(solid-js@1.9.13)
       solid-js:
         specifier: ^1.9.5
         version: 1.9.13
-    devDependencies:
-      vite:
-        specifier: ^6.3.0
-        version: 6.4.2(@types/node@22.19.19)(jiti@2.7.0)(yaml@2.9.0)
-      vite-plugin-solid:
-        specifier: ^2.11.0
-        version: 2.11.12(solid-js@1.9.13)(vite@6.4.2(@types/node@22.19.19)(jiti@2.7.0)(yaml@2.9.0))
 
 packages:
   7zip-bin@5.2.0:

@@ -48,12 +48,10 @@ export interface ElectronAPI {
 }
 
 export interface NavItem {
-  id: Page;
+  id: string;
   label: string;
   icon: string;
 }
-
-export type Page = "dashboard" | "files" | "terminal" | "settings";
 
 export interface AppConfig {
   app: { name: string };
@@ -72,5 +70,3 @@ export type {
   IFileSystemService,
   IStorageService,
 } from "./services";
-
-export type { TerminalViewComponent, TerminalViewContextValue } from "./terminal";

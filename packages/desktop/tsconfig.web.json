@@ -37,6 +37,7 @@
     { "path": "../core/tsconfig.json" },
     { "path": "../contracts/tsconfig.json" },
     { "path": "../ui/tsconfig.json" },
+    { "path": "../shell/tsconfig.json" },
     { "path": "../event-bus/tsconfig.json" },
     { "path": "../browser/tsconfig.json" }
   ]

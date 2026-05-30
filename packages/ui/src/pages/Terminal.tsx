@@ -1,5 +1,18 @@
 import { createSignal } from "solid-js";
 import { useTerminalView } from "../context/terminal-view.context";
+import type { PageDefinition } from "../page-definition";
+import styles from "../styles/terminal.module.css";
+
+export const PAGE_ID = "terminal";
+
+export function createTerminalPage(): PageDefinition {
+  return {
+    id: PAGE_ID,
+    label: "终端",
+    icon: "⚡",
+    render: () => <TerminalPage clipboard={navigator.clipboard} />,
+  };
+}
 
 export interface TerminalService {
   spawn(
@@ -35,34 +48,10 @@ export function TerminalPage(props: TerminalPageProps) {
   };
 
   return (
-    <div
-      style={{
-        position: "relative",
-        padding: "0",
-        height: "100%",
-        display: "flex",
-        "flex-direction": "column",
-      }}
-    >
-      <div
-        style={{
-          display: "flex",
-          "align-items": "center",
-          padding: "4px 12px",
-          "border-bottom": "1px solid var(--wd-colors-border)",
-          background: "var(--wd-colors-surface)",
-        }}
-      >
-        <span
-          style={{
-            "font-size": "12px",
-            color: "var(--wd-colors-text-muted)",
-            flex: 1,
-          }}
-        >
-          Ctrl+Shift+C 复制 &nbsp;|&nbsp; Ctrl+Shift+V 粘贴
-        </span>
-        <button onClick={handleCopy} style={{ "font-size": "12px" }}>
+    <div class={styles.terminal}>
+      <div class={styles.toolbar}>
+        <span class={styles.toolbarHint}>Ctrl+Shift+C 复制 &nbsp;|&nbsp; Ctrl+Shift+V 粘贴</span>
+        <button class={styles.toolbarBtn} onClick={handleCopy}>
           复制
         </button>
       </div>
@@ -72,42 +61,14 @@ export function TerminalPage(props: TerminalPageProps) {
             containerRef = el;
             setMounted(true);
           }}
-          style={{ flex: 1, overflow: "hidden" }}
+          class={styles.terminalContainer}
         >
           {mounted() && <TerminalView containerRef={containerRef} />}
         </div>
       ) : (
-        <div
-          style={{
-            flex: 1,
-            display: "flex",
-            "align-items": "center",
-            "justify-content": "center",
-            opacity: 0.5,
-            "font-size": "14px",
-          }}
-        >
-          Terminal is not available in browser mode
-        </div>
+        <div class={styles.terminalNotAvailable}>Terminal is not available in browser mode</div>
       )}
-      {copyToast() && (
-        <div
-          style={{
-            position: "absolute",
-            top: "48px",
-            right: "12px",
-            padding: "6px 14px",
-            background: "var(--wd-colors-accent)",
-            color: "#fff",
-            "border-radius": "4px",
-            "font-size": "13px",
-            "z-index": "10",
-            opacity: 0.95,
-          }}
-        >
-          已复制到剪贴板
-        </div>
-      )}
+      {copyToast() && <div class={styles.copyToast}>已复制到剪贴板</div>}
     </div>
   );
 }

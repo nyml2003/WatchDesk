@@ -1,0 +1,87 @@
+.page {
+  padding: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.splitPanel {
+  display: flex;
+  height: 100%;
+  min-height: 0;
+}
+
+.fileListPanel {
+  width: 280px;
+  border-right: 1px solid var(--wd-colors-border);
+  display: flex;
+  flex-direction: column;
+}
+
+.fileList {
+  flex: 1;
+  overflow: auto;
+  padding: 8px 0;
+}
+
+.fileItem,
+.directoryItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 6px 12px;
+  border: none;
+  background: transparent;
+  color: var(--wd-colors-text);
+  cursor: pointer;
+  font-size: 14px;
+  text-align: left;
+}
+
+.fileItemActive {
+  background: var(--wd-colors-surface-active);
+}
+
+.fileContentPanel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--wd-colors-border);
+  font-size: 13px;
+}
+
+.currentPath {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+.contentPre {
+  flex: 1;
+  margin: 0;
+  padding: 16px;
+  overflow: auto;
+  font-size: 14px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.emptyHint {
+  padding: 24px;
+  text-align: center;
+  opacity: 0.5;
+  font-size: 14px;
+}

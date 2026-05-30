@@ -14,12 +14,9 @@
     "declaration": true,
     "declarationMap": true,
     "sourceMap": true,
-    "outDir": "./dist",
-    "paths": {
-      "@/*": ["./src/*"]
-    }
+    "outDir": "./dist"
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.d.ts"],
+  "include": ["src/**/*.ts", "src/**/*.tsx"],
   "exclude": ["node_modules", "dist"],
-  "references": [{ "path": "../ui/tsconfig.json" }, { "path": "../shell/tsconfig.json" }]
+  "references": [{ "path": "../contracts/tsconfig.json" }, { "path": "../ui/tsconfig.json" }]
 }
