@@ -1,12 +1,9 @@
 export {};
 
 interface FileEntryDTO {
-  path: string;
   name: string;
-  kind: "file" | "directory" | "symlink";
-  size: number;
-  modifiedAt: number;
-  isHidden: boolean;
+  path: string;
+  isDirectory: boolean;
 }
 
 interface FileStatDTO {
@@ -34,6 +31,9 @@ declare global {
         listDirectory(path: string): Promise<FileEntryDTO[]>;
         getStat(path: string): Promise<FileStatDTO>;
         exists(path: string): Promise<boolean>;
+      };
+      dialog: {
+        selectDirectory(): Promise<string | null>;
       };
       app: {
         getPlatform(): Promise<"win32" | "darwin" | "linux">;

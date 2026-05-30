@@ -1,7 +1,11 @@
 import { render } from "solid-js/web";
-import { createSignal } from "solid-js";
+import { createSignal, Switch, Match } from "solid-js";
 import { createDependencies } from "./infrastructure/di";
-import { WatchCounter } from "./components/watch-counter";
+import { AppLayout } from "./layouts/AppLayout";
+import { Sidebar } from "./layouts/Sidebar";
+import { Dashboard } from "./pages/Dashboard";
+import { MarkdownReader } from "./pages/MarkdownReader";
+import { SettingsPage } from "./pages/Settings";
 import "./tokens.css";
 import "./global.css";
 
@@ -9,7 +13,10 @@ document.documentElement.setAttribute("data-theme", "dark");
 
 const deps = createDependencies();
 
+type Page = "dashboard" | "files" | "settings";
+
 function App() {
+  const [activePage, setActivePage] = createSignal<Page>("dashboard");
   const [theme, setTheme] = createSignal<"light" | "dark">("dark");
 
   const toggleTheme = () => {
@@ -19,25 +26,28 @@ function App() {
   };
 
   return (
-    <>
-      <WatchCounter useCase={deps.counterUseCase} label="WatchDesk Counter" />
-      <button
-        onClick={toggleTheme}
-        style={{
-          position: "fixed",
-          top: "1rem",
-          right: "1rem",
-          padding: "0.5rem 1rem",
-          cursor: "pointer",
-          background: "var(--wd-colors-surface)",
-          color: "var(--wd-colors-text-secondary)",
-          border: "1px solid var(--wd-colors-border)",
-          "border-radius": "var(--wd-radii-md)",
-        }}
-      >
-        {theme() === "dark" ? "☀" : "☾"}
-      </button>
-    </>
+    <AppLayout
+      sidebar={
+        <Sidebar
+          active={activePage()}
+          theme={theme()}
+          onNavigate={setActivePage}
+          onToggleTheme={toggleTheme}
+        />
+      }
+    >
+      <Switch>
+        <Match when={activePage() === "dashboard"}>
+          <Dashboard deps={deps} />
+        </Match>
+        <Match when={activePage() === "files"}>
+          <MarkdownReader />
+        </Match>
+        <Match when={activePage() === "settings"}>
+          <SettingsPage />
+        </Match>
+      </Switch>
+    </AppLayout>
   );
 }
 

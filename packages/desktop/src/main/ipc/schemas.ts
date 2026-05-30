@@ -9,6 +9,9 @@ export const DecrementSchema = z.object({ id: CounterIdSchema });
 export const GetCounterSchema = z.object({ id: CounterIdSchema });
 export const ResetCounterSchema = z.object({ id: CounterIdSchema });
 
+export const ReadRawSchema = z.object({ path: FilePathSchema });
+export const ListDirectorySchema = z.object({ path: FilePathSchema });
+
 export function createHandler<I, O>(
   schema: z.ZodSchema<I>,
   fn: (input: I) => Promise<O>,

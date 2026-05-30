@@ -77,7 +77,7 @@ export default tseslint.config(
     },
   },
   {
-    files: ["**/components/**/*.tsx"],
+    files: ["**/components/**/*.tsx", "**/pages/**/*.tsx"],
     rules: {
       "@typescript-eslint/no-misused-promises": "off",
     },
