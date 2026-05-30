@@ -72,3 +72,5 @@ export const EventName = {
     return `${module}:${event}` as EventName;
   },
 };
+
+export { log, type Logger } from "./logger";

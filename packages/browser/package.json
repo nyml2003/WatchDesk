@@ -1,0 +1,26 @@
+{
+  "name": "@watchdesk/browser",
+  "private": true,
+  "version": "0.1.0",
+  "description": "WatchDesk browser renderer",
+  "main": "./src/main.tsx",
+  "types": "./src/env.d.ts",
+  "exports": {
+    ".": "./src/main.tsx"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build"
+  },
+  "dependencies": {
+    "@watchdesk/contracts": "workspace:*",
+    "@xterm/addon-fit": "~0.10.0",
+    "@xterm/xterm": "^5.5.0",
+    "solid-element": "^1.8.0",
+    "solid-js": "^1.9.5"
+  },
+  "devDependencies": {
+    "vite": "^6.3.0",
+    "vite-plugin-solid": "^2.11.0"
+  }
+}

@@ -33,7 +33,9 @@ export function WatchCounter(props: CounterProps) {
   return (
     <div class={styles["counter"]}>
       <span class={styles["label"]}>{props.label}</span>
-      <span class={styles["value"]}>{count()}</span>
+      <span class={styles["value"]} data-testid="counter-value">
+        {count()}
+      </span>
       <div class={styles["buttons"]}>
         <button class={styles["button"]} onClick={handleDecrement}>
           -

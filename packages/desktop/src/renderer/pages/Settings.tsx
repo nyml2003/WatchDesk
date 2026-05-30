@@ -1,25 +1,24 @@
 import { createSignal } from "solid-js";
-import { settings } from "../core/settings-store";
+import { settingsService } from "../services/settings.service";
 import styles from "./settings.module.css";
 import pageStyles from "./page.module.css";
 
 export function SettingsPage() {
-  const [font, setFont] = createSignal(settings.terminalFont);
-  const [fontSize, setFontSize] = createSignal(String(settings.terminalFontSize));
+  const [font, setFont] = createSignal(settingsService.terminalFont);
+  const [fontSize, setFontSize] = createSignal(String(settingsService.terminalFontSize));
   const [saved, setSaved] = createSignal(false);
 
   const handleSave = () => {
-    settings.terminalFont = font();
-    settings.terminalFontSize = Number(fontSize()) || 14;
+    settingsService.terminalFont = font();
+    settingsService.terminalFontSize = Number(fontSize()) || 14;
     setSaved(true);
     setTimeout(() => setSaved(false), 2000);
   };
 
   const handleReset = () => {
-    settings.reset("terminalFont");
-    settings.reset("terminalFontSize");
-    setFont(settings.terminalFont);
-    setFontSize(String(settings.terminalFontSize));
+    settingsService.resetTerminalSettings();
+    setFont(settingsService.terminalFont);
+    setFontSize(String(settingsService.terminalFontSize));
     setSaved(true);
     setTimeout(() => setSaved(false), 2000);
   };

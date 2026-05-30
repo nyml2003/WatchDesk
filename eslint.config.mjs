@@ -12,6 +12,7 @@ export default tseslint.config(
       "test-results/",
       "playwright-report/",
       "**/*.config.*",
+      "**/vite-plugin-conditional-compile.ts",
       ".vscode/",
       ".husky/",
     ],
@@ -32,6 +33,7 @@ export default tseslint.config(
         "error",
         { argsIgnorePattern: "^_", destructuredArrayIgnorePattern: "^_" },
       ],
+      "no-void": ["error", { allowAsStatement: false }],
     },
   },
   {
@@ -59,12 +61,12 @@ export default tseslint.config(
   },
   {
     files: [
-      "**/infrastructure/**/*.ts",
-      "**/infra/**/*.ts",
-      "**/ipc/**/*.ts",
-      "**/preload/**/*.ts",
-      "**/workers/**/*.ts",
-      "**/native/**/*.ts",
+      "packages/desktop/**/*.ts",
+      "packages/desktop/**/*.tsx",
+      "packages/browser/**/*.ts",
+      "packages/browser/**/*.tsx",
+      "packages/native/**/*.ts",
+      "tests/**/*.ts",
     ],
     rules: {
       "@typescript-eslint/no-explicit-any": "off",
@@ -73,13 +75,17 @@ export default tseslint.config(
       "@typescript-eslint/no-unsafe-call": "off",
       "@typescript-eslint/no-unsafe-return": "off",
       "@typescript-eslint/no-unsafe-argument": "off",
+      "@typescript-eslint/no-unsafe-member-access": "off",
       "@typescript-eslint/no-unnecessary-condition": "off",
       "@typescript-eslint/require-await": "off",
       "@typescript-eslint/no-require-imports": "off",
+      "@typescript-eslint/unbound-method": "off",
+      "no-void": "off",
+      "@typescript-eslint/restrict-template-expressions": "off",
     },
   },
   {
-    files: ["**/components/**/*.tsx", "**/pages/**/*.tsx"],
+    files: ["**/components/**/*.tsx", "**/pages/**/*.tsx", "**/features/**/*.tsx"],
     rules: {
       "@typescript-eslint/no-misused-promises": "off",
     },

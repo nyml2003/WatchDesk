@@ -1,15 +1,12 @@
 import { createSignal, For, onMount } from "solid-js";
+import type { FileEntry } from "../services/file-system.service";
+import { fsService } from "../services/file-system.service";
+import { log } from "@watchdesk/shared";
 import styles from "./reader.module.css";
 import pageStyles from "./page.module.css";
 
-interface FileEntry {
-  name: string;
-  path: string;
-  isDirectory: boolean;
-}
-
 export function MarkdownReader() {
-  const [currentDir, setCurrentDir] = createSignal("C:\\");
+  const [currentDir, setCurrentDir] = createSignal("");
   const [entries, setEntries] = createSignal<FileEntry[]>([]);
   const [selectedFile, setSelectedFile] = createSignal<string>("");
   const [selectedFileName, setSelectedFileName] = createSignal<string>("");
@@ -20,7 +17,7 @@ export function MarkdownReader() {
     setLoading(true);
     setCurrentDir(dir);
     try {
-      const result = await window.electronAPI.fs.listDirectory(dir);
+      const result = await fsService.listDirectory(dir);
       const files: FileEntry[] = result
         .filter((e) => e.isDirectory || e.name.endsWith(".md"))
         .sort((a, b) => {
@@ -29,7 +26,7 @@ export function MarkdownReader() {
         });
       setEntries(files);
     } catch (err) {
-      console.error("Failed to list directory:", err);
+      log.error("Failed to list directory:", err);
       setEntries([]);
     } finally {
       setLoading(false);
@@ -38,14 +35,14 @@ export function MarkdownReader() {
 
   const handleSelectDirectory = async () => {
     try {
-      const dir = await window.electronAPI.dialog.selectDirectory();
+      const dir = await fsService.selectDirectory();
       if (dir) {
         await loadDirectory(dir);
         setSelectedFile("");
         setFileContent("");
       }
     } catch (err) {
-      console.error("Failed to select directory:", err);
+      log.error("Failed to select directory:", err);
     }
   };
 
@@ -56,13 +53,13 @@ export function MarkdownReader() {
     }
     setLoading(true);
     try {
-      const data = await window.electronAPI.fs.readRaw(entry.path);
+      const data = await fsService.readRaw(entry.path);
       const content = new TextDecoder().decode(data);
       setSelectedFile(entry.path);
       setSelectedFileName(entry.name);
       setFileContent(content);
     } catch (err) {
-      console.error("Failed to read file:", err);
+      log.error("Failed to read file:", err);
     } finally {
       setLoading(false);
     }
@@ -75,7 +72,7 @@ export function MarkdownReader() {
   };
 
   onMount(() => {
-    void loadDirectory(currentDir());
+    // Workspace must be selected via "选择目录" before loading
   });
 
   return (
@@ -85,7 +82,15 @@ export function MarkdownReader() {
           <div class={styles["toolbar"]}>
             <span class={styles["currentPath"]}>{currentDir()}</span>
             <button onClick={handleSelectDirectory}>选择目录</button>
-            <button onClick={() => void loadDirectory(currentDir())}>刷新</button>
+            <button
+              onClick={() =>
+                loadDirectory(currentDir()).catch((err: unknown) => {
+                  log.error(err);
+                })
+              }
+            >
+              刷新
+            </button>
           </div>
           {!loading() && entries().length === 0 ? (
             <div class={styles["emptyHint"]}>当前目录没有 Markdown 文件</div>
@@ -100,7 +105,11 @@ export function MarkdownReader() {
                         ? { background: "var(--wd-colors-surface-active)" }
                         : undefined
                     }
-                    onClick={() => void handleClickEntry(entry)}
+                    onClick={() =>
+                      handleClickEntry(entry).catch((err: unknown) => {
+                        log.error(err);
+                      })
+                    }
                   >
                     <span>{entry.isDirectory ? "📁" : "📄"}</span>
                     <span>{entry.name}</span>

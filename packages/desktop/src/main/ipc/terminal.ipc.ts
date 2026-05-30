@@ -1,5 +1,6 @@
 import { ipcMain, BrowserWindow } from "electron";
 import { native } from "@watchdesk/native";
+import { IpcChannels } from "./channels";
 
 interface PtyHandler {
   id: number;
@@ -11,7 +12,7 @@ const ptyHandlers = new Map<number, PtyHandler>();
 
 export function registerTerminalHandlers(): void {
   ipcMain.handle(
-    "terminal:spawn",
+    IpcChannels.TERMINAL_SPAWN,
     async (event, args: { cols: number; rows: number; channel: string }) => {
       const { cols, rows, channel } = args;
       const win = BrowserWindow.fromWebContents(event.sender);
@@ -26,7 +27,7 @@ export function registerTerminalHandlers(): void {
     },
   );
 
-  ipcMain.handle("terminal:write", async (_event, args: { id: number; data: string }) => {
+  ipcMain.handle(IpcChannels.TERMINAL_WRITE, async (_event, args: { id: number; data: string }) => {
     const data = new TextEncoder().encode(args.data);
     try {
       native.pty.write(args.id, data);
@@ -40,13 +41,13 @@ export function registerTerminalHandlers(): void {
   });
 
   ipcMain.handle(
-    "terminal:resize",
+    IpcChannels.TERMINAL_RESIZE,
     async (_event, args: { id: number; cols: number; rows: number }) => {
       native.pty.resize(args.id, args.cols, args.rows);
     },
   );
 
-  ipcMain.handle("terminal:kill", async (_event, args: { id: number }) => {
+  ipcMain.handle(IpcChannels.TERMINAL_KILL, async (_event, args: { id: number }) => {
     native.pty.kill(args.id);
     ptyHandlers.delete(args.id);
   });

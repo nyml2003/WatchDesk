@@ -1,0 +1,45 @@
+:root {
+  --wd-colors-background: #f5f5f7;
+  --wd-colors-surface: #ffffff;
+  --wd-colors-surface-hover: #eaeaed;
+  --wd-colors-surface-active: #dcdce0;
+  --wd-colors-border: #d1d1d6;
+  --wd-colors-text-primary: #1d1d1f;
+  --wd-colors-text-secondary: #515154;
+  --wd-colors-text-muted: #86868b;
+  --wd-colors-accent: #0071e3;
+  --wd-colors-accent-hover: #0060c0;
+
+  --wd-spacing-xs: 0.25rem;
+  --wd-spacing-sm: 0.5rem;
+  --wd-spacing-md: 0.75rem;
+  --wd-spacing-lg: 1rem;
+  --wd-spacing-xl: 1.5rem;
+  --wd-spacing-2xl: 2rem;
+
+  --wd-font-family: system-ui, -apple-system, sans-serif;
+  --wd-font-size-sm: 0.875rem;
+  --wd-font-size-md: 1rem;
+  --wd-font-size-lg: 1.125rem;
+  --wd-font-size-xl: 1.5rem;
+  --wd-font-size-display: 4rem;
+  --wd-font-weight-normal: 400;
+  --wd-font-weight-bold: 700;
+
+  --wd-radii-sm: 0.25rem;
+  --wd-radii-md: 0.5rem;
+  --wd-radii-lg: 0.75rem;
+}
+
+[data-theme="dark"] {
+  --wd-colors-background: #1a1b2e;
+  --wd-colors-surface: #2a2d4a;
+  --wd-colors-surface-hover: #3a3d5c;
+  --wd-colors-surface-active: #4a4d6c;
+  --wd-colors-border: #3a3d5c;
+  --wd-colors-text-primary: #e2e4f0;
+  --wd-colors-text-secondary: #c8cbe0;
+  --wd-colors-text-muted: #8b8fa3;
+  --wd-colors-accent: #6366f1;
+  --wd-colors-accent-hover: #818cf8;
+}

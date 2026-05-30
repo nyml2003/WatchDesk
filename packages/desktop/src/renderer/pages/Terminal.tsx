@@ -3,7 +3,9 @@ import { Terminal as Xterm } from "@xterm/xterm";
 import { FitAddon } from "@xterm/addon-fit";
 import styles from "./terminal.module.css";
 import pageStyles from "./page.module.css";
-import { settings } from "../core/settings-store";
+import { settingsService } from "../services/settings.service";
+import { terminalService } from "../services/terminal.service";
+import { log } from "@watchdesk/shared";
 import "@xterm/xterm/css/xterm.css";
 
 const darkTheme = {
@@ -29,6 +31,7 @@ export function TerminalPage(props: TerminalPageProps) {
   let xterm: Xterm | null = null;
   let fitAddon: FitAddon | null = null;
   let ptyId: number | null = null;
+  let dispose: (() => void) | null = null;
   const [copyToast, setCopyToast] = createSignal(false);
 
   const showCopyToast = () => {
@@ -59,8 +62,8 @@ export function TerminalPage(props: TerminalPageProps) {
   onMount(() => {
     xterm = new Xterm({
       theme: props.theme === "dark" ? darkTheme : lightTheme,
-      fontSize: settings.terminalFontSize,
-      fontFamily: settings.terminalFont,
+      fontSize: settingsService.terminalFontSize,
+      fontFamily: settingsService.terminalFont,
       cursorBlink: true,
       allowProposedApi: true,
     });
@@ -82,20 +85,26 @@ export function TerminalPage(props: TerminalPageProps) {
     const resizeObserver = new ResizeObserver(() => {
       doFit();
       if (ptyId !== null && xterm) {
-        window.electronAPI.terminal.resize(ptyId, xterm.cols, xterm.rows).catch(() => {});
+        terminalService.resize(ptyId, xterm.cols, xterm.rows).catch(() => {});
       }
     });
     resizeObserver.observe(container);
 
-    void window.electronAPI.terminal
+    terminalService
       .spawn(xterm.cols, xterm.rows, (data) => xterm?.write(data))
-      .then((id) => {
-        ptyId = id;
+      .then((result) => {
+        ptyId = result.id;
+        dispose = () => {
+          result.dispose();
+        };
+      })
+      .catch((err: unknown) => {
+        log.error(err);
       });
 
     xterm.onData((data) => {
       if (ptyId !== null) {
-        window.electronAPI.terminal.write(ptyId, data).catch(() => {});
+        terminalService.write(ptyId, data).catch(() => {});
       }
     });
 
@@ -111,9 +120,11 @@ export function TerminalPage(props: TerminalPageProps) {
       resizeObserver.disconnect();
       const id = ptyId;
       ptyId = null;
+      dispose?.();
+      dispose = null;
       xterm?.dispose();
       if (id !== null) {
-        window.electronAPI.terminal.kill(id).catch(() => {});
+        terminalService.kill(id).catch(() => {});
       }
     });
   });
@@ -123,22 +134,16 @@ export function TerminalPage(props: TerminalPageProps) {
       <div
         style={{
           display: "flex",
-          alignItems: "center",
+          "align-items": "center",
           padding: "4px 12px",
-          borderBottom: "1px solid var(--wd-colors-border)",
+          "border-bottom": "1px solid var(--wd-colors-border)",
           background: "var(--wd-colors-surface)",
         }}
       >
-        <span
-          style={{
-            fontSize: "12px",
-            color: "var(--wd-colors-text-muted)",
-            flex: 1,
-          }}
-        >
+        <span style={{ "font-size": "12px", color: "var(--wd-colors-text-muted)", flex: 1 }}>
           Ctrl+Shift+C 复制 &nbsp;|&nbsp; Ctrl+Shift+V 粘贴
         </span>
-        <button onClick={handleCopy} style={{ fontSize: "12px" }}>
+        <button onClick={handleCopy} style={{ "font-size": "12px" }}>
           复制
         </button>
       </div>
@@ -157,9 +162,9 @@ export function TerminalPage(props: TerminalPageProps) {
             padding: "6px 14px",
             background: "var(--wd-colors-accent)",
             color: "#fff",
-            borderRadius: "var(--wd-radii-md)",
-            fontSize: "13px",
-            zIndex: "10",
+            "border-radius": "var(--wd-radii-md)",
+            "font-size": "13px",
+            "z-index": "10",
             opacity: 0.95,
           }}
         >

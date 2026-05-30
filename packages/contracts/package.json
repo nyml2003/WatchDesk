@@ -1,0 +1,11 @@
+{
+  "name": "@watchdesk/contracts",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Shared contracts for WatchDesk shell and UI",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  }
+}

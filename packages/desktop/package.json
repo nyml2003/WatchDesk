@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@watchdesk/coroutine": "workspace:*",
+    "@watchdesk/browser": "workspace:*",
     "@watchdesk/event-bus": "workspace:*",
     "@watchdesk/native": "workspace:*",
     "@watchdesk/shared": "workspace:*",
