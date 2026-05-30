@@ -1,0 +1,3 @@
+/**
+ * Vitest setup
+ */

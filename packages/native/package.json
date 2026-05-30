@@ -1,0 +1,10 @@
+{
+  "name": "@watchdesk/native",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Native module for WatchDesk (napi-rs stub, Phase 2: Rust)",
+  "main": "./dist/index.js",
+  "types": "./src/types.ts",
+  "scripts": {},
+  "devDependencies": {}
+}

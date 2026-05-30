@@ -1,0 +1,40 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+out/
+
+# IDE
+.vscode/*
+!.vscode/settings.json
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Env
+.env
+.env.local
+
+# Logs
+*.log
+
+# pnpm
+.pnpm-store/
+
+# Electron builder
+release/
+
+# Phase 2 Rust
+packages/native/target/
+packages/native/*.node
+
+# Test
+test-results/
+playwright-report/
+coverage/
+
+# Agents
+.omx

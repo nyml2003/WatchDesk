@@ -1,0 +1,11 @@
+{
+  "name": "@watchdesk/coroutine",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Coroutine scheduler for WatchDesk",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  }
+}
