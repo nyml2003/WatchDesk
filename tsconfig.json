@@ -21,15 +21,18 @@
     "sourceMap": true
   },
   "references": [
-    { "path": "./packages/shared/tsconfig.json" },
-    { "path": "./packages/core/tsconfig.json" },
-    { "path": "./packages/contracts/tsconfig.json" },
-    { "path": "./packages/ui/tsconfig.json" },
-    { "path": "./packages/shell/tsconfig.json" },
-    { "path": "./packages/event-bus/tsconfig.json" },
-    { "path": "./packages/browser/tsconfig.json" },
-    { "path": "./packages/desktop/tsconfig.node.json" },
-    { "path": "./packages/desktop/tsconfig.web.json" },
+    { "path": "./packages/common/shared/tsconfig.json" },
+    { "path": "./packages/common/event-bus/tsconfig.json" },
+    { "path": "./packages/business/core/tsconfig.json" },
+    { "path": "./packages/frame/shell/tsconfig.json" },
+    { "path": "./packages/frame/page-dashboard/tsconfig.json" },
+    { "path": "./packages/frame/page-reader/tsconfig.json" },
+    { "path": "./packages/frame/page-terminal/tsconfig.json" },
+    { "path": "./packages/frame/page-settings/tsconfig.json" },
+    { "path": "./packages/frame/page-tictactoe/tsconfig.json" },
+    { "path": "./packages/browser/browser/tsconfig.json" },
+    { "path": "./packages/desktop/desktop/tsconfig.node.json" },
+    { "path": "./packages/desktop/desktop/tsconfig.web.json" },
     { "path": "./tests/tsconfig.json" }
   ],
   "files": []

@@ -35,14 +35,20 @@ importers:
         specifier: ^3.1.0
         version: 3.2.4(@types/debug@4.1.13)(@types/node@22.19.19)(jiti@2.7.0)(yaml@2.9.0)
 
-  packages/browser:
+  packages/browser/browser:
     dependencies:
+      "@watchdesk/page-dashboard":
+        specifier: workspace:*
+        version: link:../../frame/page-dashboard
+      "@watchdesk/page-settings":
+        specifier: workspace:*
+        version: link:../../frame/page-settings
+      "@watchdesk/page-tictactoe":
+        specifier: workspace:*
+        version: link:../../frame/page-tictactoe
       "@watchdesk/shell":
         specifier: workspace:*
-        version: link:../shell
-      "@watchdesk/ui":
-        specifier: workspace:*
-        version: link:../ui
+        version: link:../../frame/shell
       solid-js:
         specifier: ^1.9.5
         version: 1.9.13
@@ -54,40 +60,52 @@ importers:
         specifier: ^2.11.0
         version: 2.11.12(solid-js@1.9.13)(vite@6.4.2(@types/node@22.19.19)(jiti@2.7.0)(yaml@2.9.0))
 
-  packages/contracts: {}
+  packages/business/core:
+    dependencies:
+      "@watchdesk/shared":
+        specifier: workspace:*
+        version: link:../../common/shared
 
-  packages/core:
+  packages/common/event-bus:
     dependencies:
       "@watchdesk/shared":
         specifier: workspace:*
         version: link:../shared
 
-  packages/desktop:
+  packages/common/shared: {}
+
+  packages/desktop/desktop:
     dependencies:
-      "@watchdesk/browser":
-        specifier: workspace:*
-        version: link:../browser
-      "@watchdesk/contracts":
-        specifier: workspace:*
-        version: link:../contracts
       "@watchdesk/core":
         specifier: workspace:*
-        version: link:../core
+        version: link:../../business/core
       "@watchdesk/event-bus":
         specifier: workspace:*
-        version: link:../event-bus
+        version: link:../../common/event-bus
       "@watchdesk/native":
         specifier: workspace:*
         version: link:../native
+      "@watchdesk/page-dashboard":
+        specifier: workspace:*
+        version: link:../../frame/page-dashboard
+      "@watchdesk/page-reader":
+        specifier: workspace:*
+        version: link:../../frame/page-reader
+      "@watchdesk/page-settings":
+        specifier: workspace:*
+        version: link:../../frame/page-settings
+      "@watchdesk/page-terminal":
+        specifier: workspace:*
+        version: link:../../frame/page-terminal
+      "@watchdesk/page-tictactoe":
+        specifier: workspace:*
+        version: link:../../frame/page-tictactoe
       "@watchdesk/shared":
         specifier: workspace:*
-        version: link:../shared
+        version: link:../../common/shared
       "@watchdesk/shell":
         specifier: workspace:*
-        version: link:../shell
-      "@watchdesk/ui":
-        specifier: workspace:*
-        version: link:../ui
+        version: link:../../frame/shell
       "@xterm/addon-fit":
         specifier: ~0.10.0
         version: 0.10.0(@xterm/xterm@5.5.0)
@@ -114,7 +132,7 @@ importers:
         specifier: ^1.52.0
         version: 1.60.0
       electron:
-        specifier: ^35.1.0
+        specifier: ^35.7.5
         version: 35.7.5
       electron-builder:
         specifier: ^26.0.12
@@ -132,36 +150,55 @@ importers:
         specifier: ^2.11.0
         version: 2.11.12(solid-js@1.9.13)(vite@6.4.2(@types/node@22.19.19)(jiti@2.7.0)(yaml@2.9.0))
 
-  packages/event-bus:
+  packages/desktop/native: {}
+
+  packages/frame/page-dashboard:
     dependencies:
-      "@watchdesk/shared":
+      "@watchdesk/shell":
         specifier: workspace:*
-        version: link:../shared
-
-  packages/native: {}
-
-  packages/shared: {}
-
-  packages/shell:
-    dependencies:
-      "@watchdesk/contracts":
-        specifier: workspace:*
-        version: link:../contracts
-      "@watchdesk/ui":
-        specifier: workspace:*
-        version: link:../ui
+        version: link:../shell
       solid-js:
         specifier: ^1.9.5
         version: 1.9.13
 
-  packages/ui:
+  packages/frame/page-reader:
     dependencies:
-      "@watchdesk/contracts":
+      "@watchdesk/shell":
         specifier: workspace:*
-        version: link:../contracts
-      solid-element:
-        specifier: ^1.8.0
-        version: 1.9.1(solid-js@1.9.13)
+        version: link:../shell
+      solid-js:
+        specifier: ^1.9.5
+        version: 1.9.13
+
+  packages/frame/page-settings:
+    dependencies:
+      "@watchdesk/shell":
+        specifier: workspace:*
+        version: link:../shell
+      solid-js:
+        specifier: ^1.9.5
+        version: 1.9.13
+
+  packages/frame/page-terminal:
+    dependencies:
+      "@watchdesk/shell":
+        specifier: workspace:*
+        version: link:../shell
+      solid-js:
+        specifier: ^1.9.5
+        version: 1.9.13
+
+  packages/frame/page-tictactoe:
+    dependencies:
+      "@watchdesk/shell":
+        specifier: workspace:*
+        version: link:../shell
+      solid-js:
+        specifier: ^1.9.5
+        version: 1.9.13
+
+  packages/frame/shell:
+    dependencies:
       solid-js:
         specifier: ^1.9.5
         version: 1.9.13
@@ -4366,7 +4403,7 @@ snapshots:
       fs-extra: 10.1.0
       isbinaryfile: 4.0.10
       minimist: 1.2.8
-      plist: 3.1.0
+      plist: 3.1.1
     transitivePeerDependencies:
       - supports-color
 
@@ -4389,7 +4426,7 @@ snapshots:
       dir-compare: 4.2.0
       fs-extra: 11.3.5
       minimatch: 9.0.9
-      plist: 3.1.0
+      plist: 3.1.1
     transitivePeerDependencies:
       - supports-color
 
@@ -4879,8 +4916,7 @@ snapshots:
 
   "@xmldom/xmldom@0.8.13": {}
 
-  "@xmldom/xmldom@0.9.10":
-    optional: true
+  "@xmldom/xmldom@0.9.10": {}
 
   "@xterm/addon-fit@0.10.0(@xterm/xterm@5.5.0)":
     dependencies:
@@ -5994,14 +6030,14 @@ snapshots:
 
   node-abi@4.31.0:
     dependencies:
-      semver: 7.7.4
+      semver: 7.8.1
 
   node-addon-api@1.7.2:
     optional: true
 
   node-api-version@0.2.1:
     dependencies:
-      semver: 7.7.4
+      semver: 7.8.1
 
   node-gyp@12.3.0:
     dependencies:
@@ -6010,7 +6046,7 @@ snapshots:
       graceful-fs: 4.2.11
       nopt: 9.0.0
       proc-log: 6.1.0
-      semver: 7.7.4
+      semver: 7.8.1
       tar: 7.5.15
       tinyglobby: 0.2.16
       undici: 6.26.0
@@ -6113,7 +6149,6 @@ snapshots:
       "@xmldom/xmldom": 0.9.10
       base64-js: 1.5.1
       xmlbuilder: 15.1.1
-    optional: true
 
   postcss@8.5.15:
     dependencies:

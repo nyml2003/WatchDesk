@@ -1,0 +1,46 @@
+{
+  "compilerOptions": {
+    "composite": true,
+    "target": "ES2023",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "exactOptionalPropertyTypes": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "jsxImportSource": "solid-js",
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "outDir": "./dist/renderer",
+    "paths": {
+      "@/*": ["./src/renderer/*"]
+    }
+  },
+  "include": [
+    "src/renderer/**/*.ts",
+    "src/renderer/**/*.tsx",
+    "src/renderer/**/*.d.ts",
+    "src/preload/**/*.d.ts"
+  ],
+  "exclude": ["node_modules", "dist"],
+  "references": [
+    { "path": "../../common/shared/tsconfig.json" },
+    { "path": "../../business/core/tsconfig.json" },
+    { "path": "../../frame/shell/tsconfig.json" },
+    { "path": "../../frame/page-dashboard/tsconfig.json" },
+    { "path": "../../frame/page-reader/tsconfig.json" },
+    { "path": "../../frame/page-terminal/tsconfig.json" },
+    { "path": "../../frame/page-settings/tsconfig.json" },
+    { "path": "../../frame/page-tictactoe/tsconfig.json" },
+    { "path": "../../common/event-bus/tsconfig.json" }
+  ]
+}

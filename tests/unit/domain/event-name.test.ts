@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { EventName } from "../../../packages/event-bus/src/event-name/index";
+import { EventName } from "../../../packages/common/event-bus/src/event-name/index";
 
 describe("EventName parser", () => {
   it("parses valid event name", () => {

@@ -1,0 +1,13 @@
+{
+  "name": "@watchdesk/page-settings",
+  "private": true,
+  "version": "0.1.0",
+  "main": "./src/index.tsx",
+  "exports": {
+    ".": "./src/index.tsx"
+  },
+  "dependencies": {
+    "@watchdesk/shell": "workspace:*",
+    "solid-js": "^1.9.5"
+  }
+}
