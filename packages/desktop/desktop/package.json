@@ -12,7 +12,6 @@
   },
   "dependencies": {
     "@watchdesk/core": "workspace:*",
-    "@watchdesk/event-bus": "workspace:*",
     "@watchdesk/native": "workspace:*",
     "@watchdesk/page-dashboard": "workspace:*",
     "@watchdesk/page-reader": "workspace:*",
